@@ -1,0 +1,234 @@
+---
+title: "Time Series Analysis"
+Author:"Ramin Estadabadi"
+  output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(worldfootballR)
+library(tidyverse)
+library(data.table)
+library(ggpubr)
+library(tidyr)
+library(cowplot)
+library(tidyr)
+library(forecast)
+library(tseries)
+library(lubridate)
+library(data.table)
+library(dplyr)
+library(TSstudio)
+
+```
+
+```{r Web scraping and cleaning}
+epl_2020_team_urls <- fb_teams_urls('https://fbref.com/en/comps/9/10728/2020-2021-Premier-League-Stats')
+epl_2021_team_results <- get_team_match_results(team_url = epl_2020_team_urls)
+e2020<-subset(epl_2021_team_results,Comp=='Premier League')
+
+epl_2019_team_urls <- fb_teams_urls('https://fbref.com/en/comps/9/3232/2019-2020-Premier-League-Stats')
+epl_2019_team_results <- get_team_match_results(team_url = epl_2019_team_urls)
+e2019<-subset(epl_2019_team_results,Comp=='Premier League')
+
+epl_2018_team_urls <- fb_teams_urls('https://fbref.com/en/comps/9/1889/2018-2019-Premier-League-Stats')
+epl_2018_team_results <- get_team_match_results(team_url = epl_2018_team_urls)
+e2018<-subset(epl_2018_team_results,Comp=='Premier League')
+
+epl_2017_team_urls <- fb_teams_urls('https://fbref.com/en/comps/9/1631/2017-2018-Premier-League-Stats')
+epl_2017_team_results <- get_team_match_results(team_url = epl_2017_team_urls)
+e2017<-subset(epl_2017_team_results,Comp=='Premier League')
+
+
+epl_2016_team_urls <- fb_teams_urls('https://fbref.com/en/comps/9/1526/2016-2017-Premier-League-Stats')
+epl_2016_team_results <- get_team_match_results(team_url = epl_2016_team_urls)
+e2016<-subset(epl_2016_team_results,Comp=='Premier League')
+
+
+epl_2015_team_urls <- fb_teams_urls('https://fbref.com/en/comps/9/1467/2015-2016-Premier-League-Stats')
+epl_2015_team_results <- get_team_match_results(team_url = epl_2015_team_urls)
+e2015<-subset(epl_2015_team_results,Comp=='Premier League')
+
+
+epl_2014_team_urls <- fb_teams_urls('https://fbref.com/en/comps/9/733/2014-2015-Premier-League-Stats')
+epl_2014_team_results <- get_team_match_results(team_url = epl_2014_team_urls)
+e2014<-subset(epl_2014_team_results,Comp=='Premier League')
+
+
+epl_2013_team_urls <- fb_teams_urls('https://fbref.com/en/comps/9/669/2013-2014-Premier-League-Stats')
+epl_2013_team_results <- get_team_match_results(team_url = epl_2013_team_urls)
+e2013<-subset(epl_2013_team_results,Comp=='Premier League')
+
+
+epl_2012_team_urls <- fb_teams_urls('https://fbref.com/en/comps/9/602/2012-2013-Premier-League-Stats')
+epl_2012_team_results <- get_team_match_results(team_url = epl_2012_team_urls)
+e2012<-subset(epl_2012_team_results,Comp=='Premier League')
+
+
+epl_2011_team_urls <- fb_teams_urls('https://fbref.com/en/comps/9/534/2011-2012-Premier-League-Stats')
+epl_2011_team_results <- get_team_match_results(team_url = epl_2011_team_urls)
+e2011<-subset(epl_2011_team_results,Comp=='Premier League')
+
+epl_2010_team_urls <- fb_teams_urls('https://fbref.com/en/comps/9/467/2010-2011-Premier-League-Stats')
+epl_2010_team_results <- get_team_match_results(team_url = epl_2010_team_urls)
+e2010<-subset(epl_2010_team_results,Comp=='Premier League')
+
+epl_2009_team_urls <- fb_teams_urls('https://fbref.com/en/comps/9/400/2009-2010-Premier-League-Stats')
+epl_2009_team_results <- get_team_match_results(team_url = epl_2009_team_urls)
+e2009<-subset(epl_2009_team_results,Comp=='Premier League')
+
+
+epl_2008_team_urls <- fb_teams_urls('https://fbref.com/en/comps/9/338/2008-2009-Premier-League-Stats')
+epl_2008_team_results <- get_team_match_results(team_url = epl_2008_team_urls)
+e2008<-subset(epl_2008_team_results,Comp=='Premier League')
+
+
+epl_2007_team_urls <- fb_teams_urls('https://fbref.com/en/comps/9/282/2007-2008-Premier-League-Stats')
+epl_2007_team_results <- get_team_match_results(team_url = epl_2007_team_urls)
+e2007<-subset(epl_2007_team_results,Comp=='Premier League')
+
+
+epl_2006_team_urls <- fb_teams_urls('https://fbref.com/en/comps/9/229/2006-2007-Premier-League-Stats')
+epl_2006_team_results <- get_team_match_results(team_url = epl_2006_team_urls)
+e2006<-subset(epl_2006_team_results,Comp=='Premier League')
+
+epl_2005_team_urls <- fb_teams_urls('https://fbref.com/en/comps/9/183/2005-2006-Premier-League-Stats')
+epl_2005_team_results <- get_team_match_results(team_url = epl_2005_team_urls)
+e2005<-subset(epl_2005_team_results,Comp=='Premier League')
+
+
+epl_2004_team_urls <- fb_teams_urls('https://fbref.com/en/comps/9/146/2004-2005-Premier-League-Stats')
+epl_2004_team_results <- get_team_match_results(team_url = epl_2004_team_urls)
+e2004<-subset(epl_2004_team_results,Comp=='Premier League')
+
+
+epl_2003_team_urls <- fb_teams_urls('https://fbref.com/en/comps/9/112/2003-2004-Premier-League-Stats')
+epl_2003_team_results <- get_team_match_results(team_url = epl_2003_team_urls)
+e2003<-subset(epl_2003_team_results,Comp=='Premier League')
+
+
+epl_2002_team_urls <- fb_teams_urls('https://fbref.com/en/comps/9/84/2002-2003-Premier-League-Stats')
+epl_2002_team_results <- get_team_match_results(team_url = epl_2002_team_urls)
+e2002<-subset(epl_2002_team_results,Comp=='Premier League')
+
+
+epl_2001_team_urls <- fb_teams_urls('https://fbref.com/en/comps/9/63/2001-2002-Premier-League-Stats')
+epl_2001_team_results <- get_team_match_results(team_url = epl_2001_team_urls)
+e2001<-subset(epl_2001_team_results,Comp=='Premier League')
+
+
+
+epl_2000_team_urls <- fb_teams_urls('https://fbref.com/en/comps/9/47/2000-2001-Premier-League-Stats')
+epl_2000_team_results <- get_team_match_results(team_url = epl_2000_team_urls)
+e2000<-subset(epl_2000_team_results,Comp=='Premier League')
+
+
+epl_1999_team_urls <- fb_teams_urls('https://fbref.com/en/comps/9/38/1999-2000-Premier-League-Stats')
+epl_1999_team_results <- get_team_match_results(team_url = epl_1999_team_urls)
+e1999<-subset(epl_1999_team_results,Comp=='Premier League')
+
+# The above code is just for scraping the premier league tables from 1999/2000-2019/2020 season years
+
+
+
+columns<-c('Date','GF')
+#we just want the date and goals scored from our dataset
+e2020<-e2020[,columns]
+e2019<-e2019[,columns]
+e2018<-e2018[,columns]
+e2017<-e2017[,columns]
+e2016<-e2016[,columns]
+e2015<-e2015[,columns]
+e2014<-e2014[,columns]
+e2013<-e2013[,columns]
+e2012<-e2012[,columns]
+e2011<-e2011[,columns]
+e2010<-e2010[,columns]
+e2009<-e2009[,columns]
+e2008<-e2008[,columns]
+e2007<-e2007[,columns]
+e2006<-e2006[,columns]
+e2005<-e2005[,columns]
+e2004<-e2004[,columns]
+e2003<-e2003[,columns]
+e2002<-e2002[,columns]
+e2001<-e2001[,columns]
+e2000<-e2000[,columns]
+e1999<-e1999[,columns]
+#The above code is just to apply the columns that we want in our datasets
+
+prem<-rbind(e1999,e2000,e2001,e2002,e2003,e2004,e2005,e2006,e2007,e2008,e2009,e2010,e2011,e2012,e2013,e2014,e2015,e2016,e2017,e2018,e2019,e2020)
+#I set the dataframe prem to combine all of our datasets from 1999/2000-2019/2020 season years
+prem$Date <- ymd(prem$Date)#This is to set the Date to a date object 
+
+prem$Date<-floor_date(prem$Date, "month")#This is to set all of the games in each month to the first day of the month for example 2000-10-4 would be converted to 2000-10-01 or 2004-05-25 would be converted to 2005-05-01, this will be useful for our time series
+
+prem$GF<-as.numeric(prem$GF)#converting goals columns to integers
+
+prem<-prem %>%
+  mutate(Date = as.Date(Date)) %>%
+  complete(Date = seq.Date(min(Date), max(Date), by="month"))#Since every season there is no game in the months june-july then we dont have any data in our dataframe for it therefore we need to add missing dates for each year to our dataframe and by deafualt the goals will ba null values and we can replace nulls to be 0
+
+dodo<-prem %>%
+  group_by(Date)%>%
+  summarise(sum(GF))#grouping by date and summing goals and saving it to dataframe dodo
+
+dodo[is.na(dodo)] <- 0#setting null values to 0 
+
+dodo<-dodo[-c(1,2,3,4,5,258,259,260,261,262), ]#These are the rows in our dataframe that are from 4 months of 1999 season and 4 months of 2021 season but since we are only focused on 2000-2020 we drop them. 
+
+
+write.csv(dodo,'good.csv',row.names=F)#write our final csv named good.csv
+
+
+
+```
+
+
+
+```{r Time Series}
+dat<-read.csv('good.csv',header = T)
+dat$goals<-dat$sum.GF.#renaming the column name to goals
+
+dat$goals<-as.numeric(dat$goals)#converting it to integer
+dat$Date<-as.Date(dat$Date)
+
+
+X<-ts(dat[,2],start=c(2000,1),frequency = 12)
+#Time series object for our goals column
+#frequency=12 beacuse we have a monthly data
+
+autoplot(X)+ggtitle('Premier Leaugue goals from 2000-2020')+ylab('goals each month')
+#ploting the timeseries plot
+
+ggseasonplot(X)+ggtitle('seasonal plot')+ylab('goals each month')#plot seasonal
+
+ggsubseriesplot(X)+ylab('goals each month')+ggtitle('seasonal plot')#plot seasonal
+
+adf.test(X)
+ddata<-decompose(X,'multiplicative')
+autoplot(ddata) #plotting the decomposed timeseries
+
+mymodel<-auto.arima(X,ic='aic',trace=T)
+autoplot(mymodel$residuals)+ggtitle('Residual plot of the Arima model')
+
+
+acf(X)
+pacf(X)
+summary(mymodel)
+
+
+fcast<-forecast(mymodel,h=24)
+summary(fcast)
+autoplot(fcast)+ggtitle('Forecast of Premier Leaugue goals from 2000-2022')+ylab('goals each month')
+autoplot(fcast,includ=36)+
+  ggtitle('Forecast of Premier Leaugue goals from 2018-2022')+
+  ylab('goals each month')
+
+summary(fcast)
+
+```
+
+
