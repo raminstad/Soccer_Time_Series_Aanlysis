@@ -2,6 +2,8 @@
 
 ![prem](https://user-images.githubusercontent.com/79353291/153533536-5db5166e-06aa-471c-97a8-3302d47a6629.gif)
 
+* [The pdf for Rmarkdown](https://github.com/raminstad/Time-Series/blob/main/Ramin_Estadabadi_Final_rmdFile.pdf)
+* [Article about this project](https://medium.com/@ramram007/time-series-analysis-on-total-premier-league-goals-36488fdebcf2#10f0-75f1cf1153eb)
 # Analysis Objectives
 * The goal of this project is to determine and predict the total number of goals in the next two years in the premier league (England's league).
 * Performing time series analysis by using Arima model
