@@ -28,11 +28,11 @@
 . Scraping Transfermarket.com by using worldfootballr library
 
 # Methods used for data cleaning and feature engineering
-.The twenty two datasets which I collected were all in a same format with the same amount of columns and rows and the only difference in them was that they were from different years, the columns that I wanted to keep and work on were only two columns and they were the date and goals columns and I dropped the rest
+.The columns that I wanted to keep and work on were only two columns and they were the date and goals columns and I dropped the rest
 .convert the Date column into a Date object and GF column into a numeric object
-.floor the Date of every month meaning that as you can see in the picture above of all of the datasets combined there is 1999–09–11,1999–09–18, and 1999–09–25 flooring this column will make these dates 1999–09–01, this is necessary as I want to do a monthly period time series
+.floor the Date of every month meaning
 .fill the missing dates with 0
-.group by the data by Date and sum up the goals.
+.group by the data by Date and sum up the goals
 
 # Time Series
 . Checking if data is stationary
@@ -41,5 +41,14 @@
 . Seasonal plotting
 ![1_a4mYZrdm26TapIGkRL4-Aw](https://user-images.githubusercontent.com/79353291/153534940-b94dcf18-7078-4a9c-85a3-df32c84370f7.png)
 
+## Decomposition of the data
+. Decomposing the data will give us a visual representation to see the trend, seasonality, and remainder of the data
+. Using multiplicative decomposition
 
+## Model making using Arima
+. Choosing auto arima to have the best p,d,q values
+![1_pzVe9yyGG2DfzbHs_F5AUw](https://user-images.githubusercontent.com/79353291/153535329-50195931-e212-4098-9888-aa70375577bb.png)
 
+## Forecast
+
+![1_a4mYZrdm26TapIGkRL4-Aw](https://user-images.githubusercontent.com/79353291/153535359-f5a16387-0a87-4fb2-861f-038e5c8d4c19.png)
