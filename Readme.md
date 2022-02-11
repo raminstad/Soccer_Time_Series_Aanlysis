@@ -30,7 +30,7 @@
 * Scraping Transfermarket.com by using worldfootballr library
 
 # Methods used for data cleaning and feature engineering
-* The columns that I wanted to keep and work on were only two columns and they were the date and goals columns and I dropped the rest
+* The columns that I wanted to keep and work on were only two columns and they were the date and goals columns I dropped the rest
 * convert the Date column into a Date object and GF column into a numeric object
 * floor the Date of every month meaning
 * fill the missing dates with 0
