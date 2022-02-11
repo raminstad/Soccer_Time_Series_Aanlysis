@@ -47,8 +47,9 @@
 
 ## Model making using Arima
 . Choosing auto arima to have the best p,d,q values
-![1_pzVe9yyGG2DfzbHs_F5AUw](https://user-images.githubusercontent.com/79353291/153535329-50195931-e212-4098-9888-aa70375577bb.png)
+![1_DpgAZUwBXhssHkKg3a4e4A33](https://user-images.githubusercontent.com/79353291/153535429-704f2458-4c2b-4d05-aaf3-713158d8b99b.png)
+
 
 ## Forecast
+![1_pzVe9yyGG2DfzbHs_F5AUw (1)11](https://user-images.githubusercontent.com/79353291/153535453-0dc8fd61-79fd-4250-b3bd-886ddcb0e4a9.png)
 
-![1_a4mYZrdm26TapIGkRL4-Aw](https://user-images.githubusercontent.com/79353291/153535359-f5a16387-0a87-4fb2-861f-038e5c8d4c19.png)
