@@ -3,36 +3,36 @@
 ![prem](https://user-images.githubusercontent.com/79353291/153533536-5db5166e-06aa-471c-97a8-3302d47a6629.gif)
 
 # Analysis Objectives
-.The goal of this project is to determine and predict the total number of goals in the next two years in the premier league (England's league).
-.Performing time series analysis by using Arima model
+. The goal of this project is to determine and predict the total number of goals in the next two years in the premier league (England's league).
+. Performing time series analysis by using Arima model
 
 # Datasetes that will be utilized
-.The data which I have collected comes from a library in R called worldfootballR, this library is immensely useful for people who want to perform soccer analysis for data science
+. The data which I have collected comes from a library in R called worldfootballR, this library is immensely useful for people who want to perform soccer analysis for data science
 . I needed to get twenty years of data from the 1999/2000-2020/2021 seasons
 
 # Potenitial packages
-.library(worldfootballR)
-.library(tidyverse)
-.library(data.table)
-.library(ggpubr)
-.library(tidyr)
-.library(cowplot)
-.library(forecast)
-.library(tseries)
-.library(lubridate)
-.library(data.table)
-.library(dplyr)
-.library(TSstudio)
+. library(worldfootballR)
+. library(tidyverse)
+. library(data.table)
+. library(ggpubr)
+. library(tidyr)
+. library(cowplot)
+. library(forecast)
+. library(tseries)
+. library(lubridate)
+. library(data.table)
+. library(dplyr)
+. library(TSstudio)
 
 # Methods used for collecting the data
 . Scraping Transfermarket.com by using worldfootballr library
 
 # Methods used for data cleaning and feature engineering
-.The columns that I wanted to keep and work on were only two columns and they were the date and goals columns and I dropped the rest
-.convert the Date column into a Date object and GF column into a numeric object
-.floor the Date of every month meaning
-.fill the missing dates with 0
-.group by the data by Date and sum up the goals
+. The columns that I wanted to keep and work on were only two columns and they were the date and goals columns and I dropped the rest
+. convert the Date column into a Date object and GF column into a numeric object
+. floor the Date of every month meaning
+. fill the missing dates with 0
+. group by the data by Date and sum up the goals
 
 # Time Series
 . Checking if data is stationary
